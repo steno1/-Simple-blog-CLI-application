@@ -97,13 +97,49 @@ async function viewPosts() {
     }
 }
 
+// UPDATE - Edit an existing blog post
+async function editPost() {
+    const posts = loadPost();
+
+    if (posts.length === 0) {
+        console.log('No blog posts to edit.');
+        rl.close();
+        return;
+    }
+
+    posts.forEach((post) => {
+        console.log(`[${post.id}] ${post.title}`);
+    });
+
+    const id = await question('Enter the ID of the post you want to edit: ');
+    const postIndex = posts.findIndex((post) => post.id == id);
+
+    if (postIndex === -1) {
+        console.log('Blog post not found.');
+        rl.close();
+        return;
+    }
+
+    const newTitle = await question('Enter new title (leave blank to keep the same): ');
+    const newContent = await question('Enter new content (leave blank to keep the same): ');
+
+    if (newTitle) posts[postIndex].title = newTitle;
+    if (newContent) posts[postIndex].contents = newContent;
+
+    savePost(posts);
+    console.log('Blog post updated successfully!');
+    rl.close();
+}
+
 // Function to handle user actions
 async function handleAction() {
-    const action = await question("Would you like to add a new post or view all posts? (add/view): ");
+    const action = await question("Would you like to add a new post, view all posts, or edit an existing post? (add/view/edit): ");
     if (action === 'add') {
         await addPost();  // Proceed to add a new post
     } else if (action === 'view') {
         await viewPosts();  // View all posts
+    } else if (action === 'edit') {
+        await editPost();  // Edit an existing post
     } else {
         console.log("Invalid option. Exiting...");
     }
