@@ -12,7 +12,7 @@ const fileName = 'blogs.json';
 
 function formatName(name) {
     if (!name) return ""; // Handle empty input
-    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();//capitalize username first letter and lowered the rest
 }
 
 
