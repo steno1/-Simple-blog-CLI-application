@@ -10,6 +10,12 @@ const rl = readline.createInterface({
 // Blog storage file where blog posts will be saved
 const fileName = 'blogs.json';
 
+function formatName(name) {
+    if (!name) return ""; // Handle empty input
+    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+}
+
+
 // Function to ask a question and return the answer as a Promise
 function question(query) {
     return new Promise((resolve) => {
@@ -102,7 +108,8 @@ return
 
 // Greet the user with a question to ask their name
 rl.question("What is your name? ", (name) => {
-    console.log(`Hello, ${name}! You are welcome to Blog CLI.`);  // Welcome message
+     const formattedName = formatName(name); // Format the user's name
+    console.log(`Hello, ${formattedName}! You are welcome to Blog CLI.`);  // Welcome message
     addPost();  // After greeting, proceed to ask for the blog post title and content
 });
   // Ask the user what they want to do next
