@@ -12,9 +12,8 @@ const fileName = 'blogs.json';
 
 function formatName(name) {
     if (!name) return ""; // Handle empty input
-    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();//capitalize username first letter and lowered the rest
+    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase(); // Capitalize the first letter and lowercase the rest
 }
-
 
 // Function to ask a question and return the answer as a Promise
 function question(query) {
@@ -81,45 +80,42 @@ async function addPost() {
 
     // Inform the user that the post has been successfully saved
     console.log("Your post has been saved successfully!");
-
-    // Close the readline interface after the operation
-    rl.close();
 }
 
-// view all the post
+// Function to view all blog posts
 async function viewPosts() {
-    const posts = loadPost();  // Fetch the posts;
-    if(posts.length===0){
-console.log(" No blog post available");
-rl.close(); 
-return
-    }else{
-        console.log("All Blog Posts");
+    const posts = loadPost();  // Fetch the posts
+    if (posts.length === 0) {
+        console.log("No blog post available");
+    } else {
+        console.log("All Blog Posts:");
         posts.forEach(post => {
-           console.log(`\n[${post.id}] ${post.title}`);
-           console.log(` Date: ${post.date}`);
-           console.log(` Contents:  ${post.contents}`);
-
+            console.log(`\n[${post.id}] ${post.title}`);
+            console.log(`Date: ${post.date}`);
+            console.log(`Contents: ${post.contents}`);
         });
     }
- 
 }
 
-
-// Greet the user with a question to ask their name
-rl.question("What is your name? ", (name) => {
-     const formattedName = formatName(name); // Format the user's name
-    console.log(`Hello, ${formattedName}! You are welcome to Blog CLI.`);  // Welcome message
-    addPost();  // After greeting, proceed to ask for the blog post title and content
-});
-  // Ask the user what they want to do next
-  rl.question("Would you like to add a new post or view all posts? (add/view): ", async (action) => {
+// Function to handle user actions
+async function handleAction() {
+    const action = await question("Would you like to add a new post or view all posts? (add/view): ");
     if (action === 'add') {
         await addPost();  // Proceed to add a new post
     } else if (action === 'view') {
         await viewPosts();  // View all posts
     } else {
         console.log("Invalid option. Exiting...");
-        rl.close();
     }
-});
+    rl.close(); // Close the readline interface
+}
+
+// Main program execution
+async function main() {
+    const name = await question("What is your name? ");
+    const formattedName = formatName(name); // Format the user's name
+    console.log(`Hello, ${formattedName}! You are welcome to Blog CLI.`);  // Welcome message
+    await handleAction(); // Handle user actions after the greeting
+}
+
+main(); // Run the main function
