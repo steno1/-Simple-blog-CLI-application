@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "my bog assignment",
+    "contents": "how i am enjoying this",
+    "date": "1/9/2025"
+  },
+  {
+    "id": 2,
+    "title": "my assignment",
+    "contents": "wow wonderful",
+    "date": "1/9/2025"
+  },
+  {
+    "id": 3,
+    "title": "me",
+    "contents": "how",
+    "date": "1/9/2025"
+  }
+]
