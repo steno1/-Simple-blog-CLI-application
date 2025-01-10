@@ -130,6 +130,44 @@ async function editPost() {
     console.log('Blog post updated successfully!');
     rl.close();
 }
+// DELETE - Remove a blog post
+async function deletePost() {
+    const posts = loadPost(); // Load all existing blog posts from the file
+
+    // If there are no posts, notify the user and exit
+    if (posts.length === 0) {
+        console.log('No blog posts to delete.');
+        rl.close(); // Close the readline interface
+        return; // Stop further execution
+    }
+
+    // Display all posts to the user
+    posts.forEach((post) => {
+        console.log(`[${post.id}] ${post.title}`); // Show ID and title of each post
+    });
+
+    // Ask the user for the ID of the post to delete
+    const id = await question('Enter the ID of the post to delete: ');
+    // Find the index of the post that matches the entered ID
+    const postIndex = posts.findIndex((post) => post.id == id);
+
+    // If the post with the given ID is not found, notify the user and exit
+    if (postIndex === -1) {
+        console.log('Blog post not found.');
+        rl.close(); // Close the readline interface
+        return; // Stop further execution
+    }
+
+    // Remove the specified post from the array
+    posts.splice(postIndex, 1);
+    // Save the updated array back to the file
+    savePost(posts);
+
+    // Notify the user that the post has been deleted successfully
+    console.log('Blog post deleted successfully!');
+    rl.close(); // Close the readline interface
+}
+
 
 // Function to handle user actions
 async function handleAction() {
