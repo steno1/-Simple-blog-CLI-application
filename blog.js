@@ -171,18 +171,21 @@ async function deletePost() {
 
 // Function to handle user actions
 async function handleAction() {
-    const action = await question("Would you like to add a new post, view all posts, or edit an existing post? (add/view/edit): ");
+    const action = await question("Would you like to add a new post, view all posts, edit an existing post, or delete a post? (add/view/edit/delete): ");
     if (action === 'add') {
-        await addPost();  // Proceed to add a new post
+        await addPost(); // Proceed to add a new post
     } else if (action === 'view') {
-        await viewPosts();  // View all posts
+        await viewPosts(); // View all posts
     } else if (action === 'edit') {
-        await editPost();  // Edit an existing post
+        await editPost(); // Edit an existing post
+    } else if (action === 'delete') {
+        await deletePost(); // Delete a post
     } else {
         console.log("Invalid option. Exiting...");
     }
     rl.close(); // Close the readline interface
 }
+
 
 // Main program execution
 async function main() {
